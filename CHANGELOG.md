@@ -24,5 +24,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Zero runtime dependencies.
 - 100 % statement and function coverage, 97.72 % branch coverage.
 
-[Unreleased]: https://github.com/harsha345/env-guard/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/harsha345/env-guard/releases/tag/v0.1.0
+[Unreleased]: https://github.com/harsha1709acc/env-guard/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/harsha1709acc/env-guard/releases/tag/v0.1.0

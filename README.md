@@ -2,7 +2,7 @@
 
 > Validate environment variables against a typed schema at startup — with clear error messages and full TypeScript type inference.
 
-[![CI](https://github.com/harsha345/env-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/harsha345/env-guard/actions/workflows/ci.yml)
+[![CI](https://github.com/harsha1709acc/env-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/harsha1709acc/env-guard/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/@harsha345/env-guard)](https://www.npmjs.com/package/@harsha345/env-guard)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
