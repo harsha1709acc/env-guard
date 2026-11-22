@@ -40,13 +40,13 @@ Create an `env.ts` (or `env.js`) file at the root of your project and call `defi
 import { defineEnv, str, num, bool, port, url, oneOf } from "@harsha345/env-guard";
 
 export const env = defineEnv({
-  NODE_ENV:    oneOf(["development", "production", "test"] as const).default("development"),
-  PORT:        port().default(3000),
-  HOST:        str().default("0.0.0.0"),
-  DEBUG:       bool().default(false),
+  NODE_ENV: oneOf(["development", "production", "test"] as const).default("development"),
+  PORT: port().default(3000),
+  HOST: str().default("0.0.0.0"),
+  DEBUG: bool().default(false),
   DATABASE_URL: url().secret(),
-  API_KEY:     str().secret().describe("Third-party API key"),
-  LOG_LEVEL:   oneOf(["debug", "info", "warn", "error"] as const).optional(),
+  API_KEY: str().secret().describe("Third-party API key"),
+  LOG_LEVEL: oneOf(["debug", "info", "warn", "error"] as const).optional(),
   MAX_RETRIES: num().optional(),
 });
 
@@ -76,14 +76,14 @@ Validates environment variables against a schema and returns a frozen, type-infe
 ```ts
 function defineEnv<S extends EnvSchema>(
   schema: S,
-  source?: Record<string, string | undefined>,  // defaults to process.env
-): Readonly<InferEnv<S>>
+  source?: Record<string, string | undefined>, // defaults to process.env
+): Readonly<InferEnv<S>>;
 ```
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `schema` | `EnvSchema` | An object mapping variable names to field builders |
-| `source` | `Record<string, string \| undefined>` | Override the environment source (useful in tests) |
+| Parameter | Type                                  | Description                                        |
+| --------- | ------------------------------------- | -------------------------------------------------- |
+| `schema`  | `EnvSchema`                           | An object mapping variable names to field builders |
+| `source`  | `Record<string, string \| undefined>` | Override the environment source (useful in tests)  |
 
 **Throws** `EnvValidationError` if one or more variables are missing or invalid. All errors are collected before throwing — not just the first one.
 
@@ -105,13 +105,13 @@ str(): FieldBuilder<string>
 
 ```ts
 // Required string
-API_SECRET: str()
+API_SECRET: str();
 
 // With a default
-APP_NAME: str().default("my-app")
+APP_NAME: str().default("my-app");
 
 // Optional — resolves to string | undefined
-OPTIONAL_TAG: str().optional()
+OPTIONAL_TAG: str().optional();
 ```
 
 ---
@@ -126,13 +126,13 @@ num(): FieldBuilder<number>
 
 ```ts
 // Required number
-TIMEOUT_MS: num()
+TIMEOUT_MS: num();
 
 // With a default
-MAX_CONNECTIONS: num().default(10)
+MAX_CONNECTIONS: num().default(10);
 
 // Optional — resolves to number | undefined
-CACHE_TTL: num().optional()
+CACHE_TTL: num().optional();
 ```
 
 ---
@@ -147,13 +147,13 @@ bool(): FieldBuilder<boolean>
 
 ```ts
 // Required boolean
-ENABLE_METRICS: bool()
+ENABLE_METRICS: bool();
 
 // With a default
-DEBUG: bool().default(false)
+DEBUG: bool().default(false);
 
 // Optional — resolves to boolean | undefined
-VERBOSE: bool().optional()
+VERBOSE: bool().optional();
 ```
 
 ---
@@ -168,10 +168,10 @@ port(): FieldBuilder<number>
 
 ```ts
 // Required port
-PORT: port()
+PORT: port();
 
 // With a default
-HTTP_PORT: port().default(3000)
+HTTP_PORT: port().default(3000);
 ```
 
 ---
@@ -186,13 +186,13 @@ url(): FieldBuilder<string>
 
 ```ts
 // Required URL
-DATABASE_URL: url()
+DATABASE_URL: url();
 
 // Secret — value is masked as [REDACTED] in error messages
-DATABASE_URL: url().secret()
+DATABASE_URL: url().secret();
 
 // Optional
-PROXY_URL: url().optional()
+PROXY_URL: url().optional();
 ```
 
 ---
@@ -202,20 +202,18 @@ PROXY_URL: url().optional()
 Restricts the variable to one of a fixed list of string values. TypeScript infers the union type from the literal array.
 
 ```ts
-function oneOf<const U extends readonly string[]>(
-  values: U,
-): FieldBuilder<U[number]>
+function oneOf<const U extends readonly string[]>(values: U): FieldBuilder<U[number]>;
 ```
 
 ```ts
 // Inferred as "development" | "production" | "test"
-NODE_ENV: oneOf(["development", "production", "test"] as const)
+NODE_ENV: oneOf(["development", "production", "test"] as const);
 
 // With a default — still fully typed
-NODE_ENV: oneOf(["development", "production", "test"] as const).default("development")
+NODE_ENV: oneOf(["development", "production", "test"] as const).default("development");
 
 // Optional — resolves to "small" | "medium" | "large" | undefined
-PLAN_TIER: oneOf(["small", "medium", "large"] as const).optional()
+PLAN_TIER: oneOf(["small", "medium", "large"] as const).optional();
 ```
 
 > **Note:** Use `as const` to preserve the literal string types.
@@ -231,7 +229,7 @@ Every builder returned by `str()`, `num()`, `bool()`, `port()`, `url()`, and `on
 Sets a fallback value used when the environment variable is absent. The field remains **required** at the type level but will never be `undefined` at runtime.
 
 ```ts
-PORT: port().default(3000)
+PORT: port().default(3000);
 // → type: number  (never undefined, even if PORT is unset)
 ```
 
@@ -240,7 +238,7 @@ PORT: port().default(3000)
 Marks the variable as optional. If it is absent, the resolved value is `undefined`. If it is present, it must still parse successfully.
 
 ```ts
-LOG_LEVEL: str().optional()
+LOG_LEVEL: str().optional();
 // → type: string | undefined
 ```
 
@@ -249,8 +247,8 @@ LOG_LEVEL: str().optional()
 Marks the variable as a secret. When validation fails, the received value is replaced with `[REDACTED]` in the error output instead of being logged in plain text.
 
 ```ts
-API_KEY: str().secret()
-DATABASE_URL: url().secret()
+API_KEY: str().secret();
+DATABASE_URL: url().secret();
 ```
 
 #### `.describe(text)`
@@ -258,7 +256,7 @@ DATABASE_URL: url().secret()
 Attaches a human-readable description that is included in error messages to give more context about the variable's purpose.
 
 ```ts
-API_KEY: str().secret().describe("Primary API key for the payment provider")
+API_KEY: str().secret().describe("Primary API key for the payment provider");
 // Error: Missing required environment variable "API_KEY" (Primary API key for the payment provider)
 ```
 
@@ -275,8 +273,8 @@ try {
   const env = defineEnv({ API_KEY: str() });
 } catch (err) {
   if (err instanceof EnvValidationError) {
-    console.error(err.message);       // formatted summary
-    console.error(err.errors);        // EnvErrorItem[]
+    console.error(err.message); // formatted summary
+    console.error(err.errors); // EnvErrorItem[]
     // err.errors[0] → { key, expectedType, receivedValue, message, isSecret }
   }
 }
@@ -292,11 +290,11 @@ try {
 import { defineEnv, str, num, bool, port, url, oneOf } from "@harsha345/env-guard";
 
 export const env = defineEnv({
-  NODE_ENV:    oneOf(["development", "production", "test"] as const).default("development"),
-  PORT:        port().default(3000),
+  NODE_ENV: oneOf(["development", "production", "test"] as const).default("development"),
+  PORT: port().default(3000),
   DATABASE_URL: url().secret(),
-  REDIS_URL:   url().optional(),
-  DEBUG:       bool().default(false),
+  REDIS_URL: url().optional(),
+  DEBUG: bool().default(false),
 });
 ```
 
@@ -320,8 +318,8 @@ export const env = defineEnv({
 ```ts
 export const env = defineEnv({
   // These may or may not be present — TypeScript knows they can be undefined
-  SENTRY_DSN:  url().optional(),
-  TRACE_ID:    str().optional(),
+  SENTRY_DSN: url().optional(),
+  TRACE_ID: str().optional(),
   MAX_RETRIES: num().optional(),
 });
 
@@ -337,9 +335,9 @@ if (env.SENTRY_DSN) {
 export const env = defineEnv({
   // If DATABASE_URL or STRIPE_SECRET_KEY are missing or invalid,
   // their values appear as [REDACTED] in error messages — safe to log.
-  DATABASE_URL:      url().secret(),
+  DATABASE_URL: url().secret(),
   STRIPE_SECRET_KEY: str().secret().describe("Stripe live secret key"),
-  JWT_SECRET:        str().secret(),
+  JWT_SECRET: str().secret(),
 });
 ```
 
@@ -350,10 +348,10 @@ import { defineEnv, str, port } from "@harsha345/env-guard";
 
 const env = defineEnv(
   { PORT: port(), APP_NAME: str() },
-  { PORT: "4000", APP_NAME: "test-app" },  // ← inject test values directly
+  { PORT: "4000", APP_NAME: "test-app" }, // ← inject test values directly
 );
 
-console.log(env.PORT);     // 4000  (number)
+console.log(env.PORT); // 4000  (number)
 console.log(env.APP_NAME); // "test-app"
 ```
 
@@ -365,7 +363,7 @@ import { defineEnv, str, url, EnvValidationError } from "@harsha345/env-guard";
 try {
   const env = defineEnv({
     DATABASE_URL: url().secret(),
-    APP_SECRET:   str().secret(),
+    APP_SECRET: str().secret(),
   });
 } catch (err) {
   if (err instanceof EnvValidationError) {

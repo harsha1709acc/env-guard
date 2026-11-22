@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2026-11-22
 
 ### Added
+
 - `defineEnv` — validates environment variables against a typed schema at startup, collects all errors before throwing, and returns a frozen, type-inferred object.
 - `str` — string field builder with optional min/max length validation.
 - `num` — number field builder that coerces strings to finite numbers.
